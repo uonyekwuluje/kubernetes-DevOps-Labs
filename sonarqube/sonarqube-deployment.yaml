@@ -17,7 +17,17 @@ spec:
     spec:
       containers:
         - name: sonarqube
-          image: sonarqube:7.1
+          image: sonarqube:8.4.2-community
+          env:
+          - name: "SONARQUBE_JDBC_USERNAME"
+            value: "psqladmin@psqlcicd-db"
+          - name: "SONARQUBE_JDBC_URL"
+            value: "jdbc:postgresql://psqlcicd-db.postgres.database.azure.com/sonar"
+          - name: "SONARQUBE_JDBC_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
           resources:
             requests:
               cpu: 500m
@@ -30,24 +40,16 @@ spec:
             name: sonar-data
           - mountPath: "/opt/sonarqube/extensions/"
             name: sonar-extensions
-          env:
-          - name: "SONARQUBE_JDBC_USERNAME"
-            value: "psqladmin@psqlcicd-db"
-          - name: "SONARQUBE_JDBC_URL"
-            value: "jdbc:postgresql://psqlcicd-db.postgres.database.azure.com/sonar"
-          - name: "SONARQUBE_JDBC_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: postgres
-                key: password
-          - name: STARTUP_SCRIPT
-            value: |
-              #! /bin/bash
-              sysctl -w vm.max_map_count=262144
-              echo "done" 
           ports:
           - containerPort: 9000
             protocol: TCP
+      initContainers:
+        - name: sysctl
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ['sysctl', '-w', 'vm.max_map_count=262144']
+          securityContext:
+            privileged: true
       volumes:
       - name: sonar-data
         persistentVolumeClaim:
