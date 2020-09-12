@@ -40,6 +40,18 @@ curl 104.45.178.15
 ```
 
 
+## SSL Certificate Update
+Generate Signed SSL certificate and perform the following
+* Create a new file with your SSL Certificate, Root CA and or Intermediate CA
+* Convert that file to pem format
+```
+openssl x509 -in cert.crt -out cert.pem
+```
+kubectl create secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
+
+
+
+
 
 ## Converting Passwords to base64
 ```
