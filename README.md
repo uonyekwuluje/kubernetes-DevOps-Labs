@@ -47,10 +47,10 @@ Generate Signed SSL certificate and perform the following
 ```
 openssl x509 -in cert.crt -out cert.pem
 ```
+Create new ssl secret
+```
 kubectl create secret tls ${CERT_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
-
-
-
+```
 
 
 ## Converting Passwords to base64
