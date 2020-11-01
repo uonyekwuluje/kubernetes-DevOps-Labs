@@ -5,6 +5,7 @@ metadata:
   labels:
     app: sonarqube
   name: sonarqube
+  namespace: sonarqube
 spec:
   ports:
     - name: sonar

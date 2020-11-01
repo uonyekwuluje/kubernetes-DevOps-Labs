@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sonar-data
+  namespace: sonarqube
 spec:
   accessModes:
   - ReadWriteOnce
@@ -16,6 +17,21 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sonar-extensions
+  namespace: sonarqube
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 31Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-storage
+  namespace: sonarqube
 spec:
   accessModes:
   - ReadWriteOnce

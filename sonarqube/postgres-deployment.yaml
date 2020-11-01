@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-db
+  namespace: sonarqube
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        name: postgres-db
+  template:
+    metadata:
+      labels:
+        name: postgres-db
+    spec:
+      containers:
+        - name: postgres-db
+          image: postgres:9.5.3
+          env:
+          - name: "POSTGRES_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+          - name: "POSTGRES_USER"
+            value: sonaruser
+          - name: "POSTGRES_DB"
+            value: sonardb
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: postgres-db
+  name: postgres-db-service
+  namespace: sonarqube
+spec:
+  ports:
+    - port: 5432
+  selector:
+    name: postgres-db
