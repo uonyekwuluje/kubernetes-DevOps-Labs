@@ -9,6 +9,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins-deployment
+  namespace: jenkins
 spec:
   replicas: 1
   selector:
@@ -35,7 +36,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins
+  name: jenkins-service
+  namespace: jenkins
+  labels:
+    app: jenkins
 spec:
   ports:
   - name: jenkins
@@ -43,4 +47,4 @@ spec:
     protocol: TCP
   selector:
     app: jenkins
-  type: ClusterIP
+  type: LoadBalancer
