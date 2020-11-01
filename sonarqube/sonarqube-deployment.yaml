@@ -23,9 +23,9 @@ spec:
           image: sonarqube:7.1
           env:
           - name: "SONARQUBE_JDBC_USERNAME"
-            value: "sonaruser@sonardb"
+            value: "sonaruser"
           - name: "SONARQUBE_JDBC_URL"
-            value: "jdbc:postgresql://postgres-db-service:5432/sonardb"
+            value: "jdbc:postgresql://postgres-db-service.sonarqube.svc.cluster.local:5432/sonardb"
           - name: "SONARQUBE_JDBC_PASSWORD"
             valueFrom:
               secretKeyRef:
@@ -53,3 +53,21 @@ spec:
       - name: sonar-extensions
         persistentVolumeClaim:
           claimName: sonar-extensions
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sonarqube
+  name: sonarqube
+  namespace: sonarqube
+spec:
+  ports:
+    - name: sonar
+      port: 80
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: sonarqube
+  type: LoadBalancer
