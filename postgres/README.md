@@ -11,7 +11,7 @@ cGFzc3dvcmQ=
 kubectl apply -f postgres-pvc.yaml
 kubectl apply -f postgres-secret.yaml
 kubectl apply -f postgres-deployment.yaml
-kubectl apply -f nginx-shell.yaml
+kubectl apply -f alpine-shell.yaml
 ```
 
 ### Get Pods
@@ -49,7 +49,7 @@ kubectl exec --stdin --tty bash-alpine -- /bin/sh
 
 / # apk add --no-cache postgresql-client
 / #
-/ # psql -h 192.16.1.4 -U adminuser --password -p 5432 postgres
+/ # psql -h postgres-db-service.default.svc.cluster.local -U adminuser --password -p 5432 postgres
 Password: 
 psql (12.4, server 9.5.3)
 Type "help" for help.
