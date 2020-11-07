@@ -4,7 +4,6 @@
 ```
 kubectl apply -f nginx-deployment.yaml
 ```
-
 ## Test
 ```
 kubectl get pods
@@ -25,4 +24,9 @@ kubectl port-forward service/nginx-service 7000:80
 
 # Loginto Browser
 http://localhost:7000
+```
+
+## Delete Deployment
+```
+kubectl delete -f nginx-deployment.yaml
 ```
