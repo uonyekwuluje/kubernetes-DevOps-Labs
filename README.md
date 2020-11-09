@@ -1,6 +1,5 @@
 # kubernetes-DevOps-Labs
-This is my collection of kubernetes manifests for DevOps/SRE related tasks. This should help out with basic proof of concepts in any cluster.
-For a scaled down setup, you can install [minikube](https://minikube.sigs.k8s.io/docs/start/). 
+This is my collection of kubernetes manifests for DevOps/SRE related tasks. This should help out with basic proof of concepts in any cluster. For a scaled down setup, you can install [minikube](https://minikube.sigs.k8s.io/docs/start/). If you need a more robust system with control and access, take a look at [Kubernetes 3 node cluster setup](https://uonyekwuluje.github.io/2020-11-07/kubernetes-installation). Outside these, Azure AKS, AWS EKS or Google K8 should be fine
 
 ## Table of Content <br>
 * [Postgres SQL](/postgres)
