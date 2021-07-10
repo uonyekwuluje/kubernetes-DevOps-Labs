@@ -21,6 +21,8 @@ spec:
         image: "{{ .Values.kibana_image.repository }}:{{ .Values.kibana_image.tag }}"
         imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
         env:
+        - name: server.host
+          value: 0.0.0.0
         - name: cluster.name
           value: {{ .Values.cluster_name }}
         - name: ELASTICSEARCH_URL
