@@ -5,9 +5,9 @@ metadata:
   name: es 
   namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
   labels:
-     app: {{ .Values.appname }}
+     service: {{ .Values.appname }}
 spec:
-  clusterIP: NodePort
+  clusterIP: None
   selector:
     app: {{ .Values.appname }}
   ports:
