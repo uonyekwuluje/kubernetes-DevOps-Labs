@@ -3,7 +3,7 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: manuales
-  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+  namespace: {{ .Values.namespace }}-ns
 provisioner: kubernetes.io/no-provisioner
 reclaimPolicy: Retain
 allowVolumeExpansion: true
@@ -14,7 +14,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: {{ .Values.namespace }}-pv-volume
-  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+  namespace: {{ .Values.namespace }}-ns
   labels:
     type: local
 spec:
@@ -31,7 +31,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.namespace }}-pv-claim
-  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+  namespace: {{ .Values.namespace }}-ns
 spec:
   storageClassName: manuales      
   accessModes:
