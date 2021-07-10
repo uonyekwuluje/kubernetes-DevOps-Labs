@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apache2appargo
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache2-deployment
+  namespace: apache2appargo
+spec:
+  selector:
+    matchLabels:
+      app: apache2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: apache2
+    spec:
+      containers:
+      - name: apache2
+        image: httpd:2.4.48
+        resources:
+          limits:
+            cpu: "1"
+            memory: 600Mi
+          requests:
+            cpu: "0.6"
+            memory: 300Mi
+        ports:
+        - containerPort: 80
+    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache2-service
+  namespace: apache2appargo
+spec:
+  selector:
+    app: apache2
+  ports:
+    - port: 8098
+      targetPort: 80
