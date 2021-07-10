@@ -59,7 +59,7 @@ spec:
           requests:
             memory: 1.5Gi
           limits:
-            memory: 2.0Gi
+            memory: 4.0Gi
         env:
           - name: cluster.name
             value: elasticsearch-cluster
@@ -72,7 +72,7 @@ spec:
           - name: cluster.initial_master_nodes
             value: "elasticsearch-0.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local"
           - name: ES_JAVA_OPTS
-            value: -Xms1g -Xmx1g
+            value: "-Xms2g -Xmx2g"
           - name: network.host
             value: 0.0.0.0
         volumeMounts:
