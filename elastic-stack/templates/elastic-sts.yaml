@@ -70,7 +70,7 @@ spec:
           - name: discovery.seed_hosts
             value: "elasticsearch-0.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local,elasticsearch-1.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local,elasticsearch-2.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local"
           - name: cluster.initial_master_nodes
-            value: "elasticsearch-0.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local"
+            value: "elasticsearch-0.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local,elasticsearch-1.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local,elasticsearch-2.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local"
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
           - name: network.host
