@@ -48,5 +48,4 @@ spec:
     protocol: TCP
   selector:
     app: jenkins
-  type: NodePort
 #  type: LoadBalancer
