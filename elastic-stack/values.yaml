@@ -1,3 +1,4 @@
+cluster_name: "elasticsearch-cluster"
 namespace: elk-stack-ns
 appname: elasticsearch
 image:

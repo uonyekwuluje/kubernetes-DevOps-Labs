@@ -21,6 +21,8 @@ spec:
         image: "{{ .Values.kibana_image.repository }}:{{ .Values.kibana_image.tag }}"
         imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
         env:
+        - name: cluster.name
+          value: {{ .Values.cluster_name }}
         - name: elasticsearch.hosts
           value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
         resources:

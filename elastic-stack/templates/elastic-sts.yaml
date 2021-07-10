@@ -62,7 +62,7 @@ spec:
             memory: 4.0Gi
         env:
           - name: cluster.name
-            value: elasticsearch-cluster
+            value: {{ .Values.cluster_name }}
           - name: node.name
             valueFrom:
               fieldRef:
