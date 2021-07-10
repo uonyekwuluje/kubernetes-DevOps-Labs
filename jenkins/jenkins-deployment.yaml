@@ -32,6 +32,7 @@ spec:
         - name: jenkins-home
           emptyDir: {}
 
+
 ---
 apiVersion: v1
 kind: Service
@@ -47,4 +48,4 @@ spec:
     protocol: TCP
   selector:
     app: jenkins
-  type: LoadBalancer
+#  type: LoadBalancer
