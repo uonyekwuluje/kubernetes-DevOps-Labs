@@ -26,11 +26,11 @@ spec:
         ports:
         - containerPort: 8080
         volumeMounts:
-          - name: jenkins-home
-            mountPath: /var/jenkins_home
-      volumes:
         - name: jenkins-home
-          emptyDir: {}
+          mountPath: /var/jenkins_home
+      volumes:
+      - name: jenkins-home
+        emptyDir: {}
 
 
 ---
@@ -48,4 +48,5 @@ spec:
     protocol: TCP
   selector:
     app: jenkins
+  type: NodePort
 #  type: LoadBalancer
