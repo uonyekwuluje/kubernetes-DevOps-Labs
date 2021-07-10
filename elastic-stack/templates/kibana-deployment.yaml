@@ -21,18 +21,12 @@ spec:
         image: "{{ .Values.kibana_image.repository }}:{{ .Values.kibana_image.tag }}"
         imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
         env:
+        - name: server.host
+          value: 0.0.0.0
         - name: cluster.name
           value: {{ .Values.cluster_name }}
-        - name: ELASTICSEARCH_URL
+        - name: elasticsearch.hosts
           value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
-        - name: XPACK_MONITORING_ENABLED
-          value: "false"
-        - name: XPACK_REPORTING_ENABLED
-          value: "false"
-        - name: XPACK_ML_ENABLED
-          value: "false"   
-        - name: XPACK_GRAPH_ENABLED
-          value: "false"    
         resources:
           limits:
             cpu: 1000m
