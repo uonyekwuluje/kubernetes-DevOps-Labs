@@ -9,14 +9,21 @@ kubectl apply -f jenkins-deployment.yaml
 ```
 kubectl get pods -n jenkins
 NAME                                 READY   STATUS    RESTARTS   AGE
-jenkins-deployment-7f5874c7f-cnzbv   1/1     Running   0          24s
+jenkins-deployment-78994c874-hhc7l   1/1     Running   0          5m58s
 
 kubectl get svc -n jenkins
-NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)          AGE
-jenkins-service   LoadBalancer   192.17.211.114   40.76.149.110   8080:31290/TCP   29s
+NAME              TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+jenkins-service   ClusterIP   10.43.216.5   <none>        8080/TCP   11s
+
+# Retrieve Jenkins Password
+kubectl exec -it jenkins-deployment-78994c874-hhc7l bash -n jenkins
+cat /var/jenkins_home/secrets/initialAdminPassword
+
+# Forward Port
+kubectl port-forward --address 0.0.0.0 svc/jenkins-service -n jenkins 8080
 ```
 
 # Login to Browser
 ```
-http://40.76.149.110:8080
+http://localhost:8080
 ```
