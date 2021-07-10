@@ -1,4 +1,4 @@
-namespace: elk-stack
+namespace: elk-stack-ns
 appname: elasticsearch
 image:
   repository: "docker.elastic.co/elasticsearch/elasticsearch"
