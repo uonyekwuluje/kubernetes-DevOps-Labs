@@ -73,6 +73,8 @@ spec:
             value: "elasticsearch-0.es.{{ .Values.namespace }}-{{ .Values.environment }}-ns.svc.cluster.local"
           - name: ES_JAVA_OPTS
             value: -Xms1g -Xmx1g
+          - name: network.host
+            value: 0.0.0.0
         volumeMounts:
         - name: {{ .Values.appname }}-persistent-storage
           mountPath: /usr/share/elasticsearch/data
