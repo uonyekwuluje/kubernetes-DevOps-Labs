@@ -9,7 +9,7 @@ metadata:
 spec:
   clusterIP: None
   selector:
-    app: {{ .Values.appname }}
+    service: {{ .Values.appname }}
   ports:
   - name: serving
     port: 9200
