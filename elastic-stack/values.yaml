@@ -4,3 +4,8 @@ image:
   repository: "docker.elastic.co/elasticsearch/elasticsearch"
   pullPolicy: "IfNotPresent"
   tag: "7.13.3"
+kibappname: kibana
+kibana_image:
+  repository: "docker.elastic.co/kibana/kibana"
+  pullPolicy: "IfNotPresent"
+  tag: "7.13.3"

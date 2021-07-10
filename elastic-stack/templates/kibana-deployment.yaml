@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kibappname }}-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    service: {{ .Values.kibappname }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     service: {{ .Values.kibappname }}
+  template:
+    metadata:
+      labels:
+        service: {{ .Values.kibappname }}
+    spec:
+      containers:
+      - name: {{ .Values.kibappname }}
+        image: "{{ .Values.kibana_image.repository }}:{{ .Values.kibana_image.tag }}"
+        imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
+        env:
+        - name: cluster.name
+          value: elasticsearch-cluster
+        - name: XPACK_SECURITY_ENABLED
+          value: 'false'
+        - name: XPACK_GRAPH_ENABLED
+          value: 'false'
+        - name: XPACK_ML_ENABLED
+          value: 'false'
+        - name: XPACK_REPORTING_ENABLED
+          value: 'false'
+        - name: ELASTICSEARCH_URL
+          value: 'http://elasticsearch-0.es.{{ .Values.namespace }}:9200'
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 5601
+          name: {{ .Values.kibappname }}
+          protocol: TCP

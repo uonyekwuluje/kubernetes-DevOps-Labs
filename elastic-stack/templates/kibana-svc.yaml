@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.kibappname }}
+  namespace: {{ .Values.namespace }}
+  labels:
+     service: {{ .Values.kibappname }}
+spec:
+  clusterIP: None
+  selector:
+    service: {{ .Values.kibappname }}
+  ports:
+  - name: kibana
+    port: 5601
