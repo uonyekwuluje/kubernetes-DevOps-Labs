@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.appname }}
+  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+  labels:
+    service: elasticsearch
+spec:
+  serviceName: es
+  replicas: 3
+  selector:
+    matchLabels:
+      service: {{ .Values.appname }}
+  template:
+    metadata:
+      labels:
+        service: {{ .Values.appname }}
+    spec:
+      terminationGracePeriodSeconds: 300
+      initContainers:
+      - name: fix-the-volume-permission
+        image: busybox
+        command:
+        - sh
+        - -c
+        - chown -R 1000:1000 /usr/share/elasticsearch/data
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: {{ .Values.appname }}-persistent-storage
+          mountPath: /usr/share/elasticsearch/data
+      - name: increase-the-vm-max-map-count
+        image: busybox
+        command:
+        - sysctl
+        - -w
+        - vm.max_map_count=262144
+        securityContext:
+          privileged: true
+      - name: increase-the-ulimit
+        image: busybox
+        command:
+        - sh
+        - -c
+        - ulimit -n 65536
+        securityContext:
+          privileged: true
+      containers:
+      - name: {{ .Values.appname }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 9200
+          name: http
+        - containerPort: 9300
+          name: tcp
+        resources:
+          requests:
+            memory: 1.5Gi
+          limits:
+            memory: 2.0Gi
+        env:
+          - name: cluster.name
+            value: elasticsearch-cluster
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: discovery.seed_hosts
+            value: "elasticsearch-0.es.default.svc.cluster.local,elasticsearch-1.es.default.svc.cluster.local,elasticsearch-2.es.default.svc.cluster.local"
+          - name: cluster.initial_master_nodes
+            value: "elasticsearch-0.es.default.svc.cluster.local"
+          - name: ES_JAVA_OPTS
+            value: -Xms1g -Xmx1g
+        volumeMounts:
+        - name: {{ .Values.appname }}-persistent-storage
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+      - name: {{ .Values.appname }}-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.namespace }}-pv-claim

@@ -1,0 +1,7 @@
+namespace: elastic-stack
+environment: dev-env
+appname: elasticsearch
+image:
+  repository: "docker.elastic.co/elasticsearch/elasticsearch"
+  pullPolicy: "IfNotPresent"
+  tag: "7.13.3"

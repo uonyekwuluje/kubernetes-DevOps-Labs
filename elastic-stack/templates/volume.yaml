@@ -1,0 +1,41 @@
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: manuales
+  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: Immediate
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.namespace }}-pv-volume
+  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+  labels:
+    type: local
+spec:
+  storageClassName: manuales
+  capacity:
+    storage: 6Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/opt2/elastic"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.namespace }}-pv-claim
+  namespace: {{ .Values.namespace }}-{{ .Values.environment }}-ns
+spec:
+  storageClassName: manuales      
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
