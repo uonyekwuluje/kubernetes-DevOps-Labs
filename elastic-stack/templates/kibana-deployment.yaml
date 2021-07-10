@@ -21,8 +21,8 @@ spec:
         image: "{{ .Values.kibana_image.repository }}:{{ .Values.kibana_image.tag }}"
         imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
         env:
-        - name: ELASTICSEARCH_URL
-          value: http://elasticsearch:9200
+        - name: elasticsearch.hosts
+          value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
         resources:
           limits:
             cpu: 1000m
