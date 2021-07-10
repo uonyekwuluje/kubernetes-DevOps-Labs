@@ -6,19 +6,18 @@ kubectl apply -f apache2-deployment.yaml
 ```
 ## Test
 ```
-kubectl get pods
-NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-574b87c764-k69jp   1/1     Running   0          9s
-nginx-deployment-574b87c764-rkjcw   1/1     Running   0          9s
+kubectl get pods -n apache2
+>>
+NAME                                  READY   STATUS    RESTARTS   AGE
+apache2-deployment-7f8546b48f-cmwv4   1/1     Running   0          6m20s
 
-kubectl get svc
+kubectl get svc -n apache2
+>>
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+apache2-service   ClusterIP   10.43.170.94   <none>        8098/TCP   7m4s
 
-NAME            TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)        AGE
-kubernetes      ClusterIP      192.17.0.1       <none>         443/TCP        9m39s
-nginx-service   LoadBalancer   192.17.236.145   20.185.102.4   80:31176/TCP   40s
-
-
-kubectl port-forward pods/nginx-deployment-574b87c764-k69jp 7000:80
+kubectl port-forward svc/apache2-service 8080:8098 -n apache2
+http://localhost:8080
 OR
 kubectl port-forward service/nginx-service 7000:80
 
