@@ -1,6 +1,7 @@
 ## Connect to Elasticsearch Cluster
 ```
 kubectl port-forward elasticsearch-0 9200:9200 -n elk-stack-ns
+kubectl port-forward svc/es 9200:9200 -n elk-stack-ns
 ```
 Test Commands
 ```

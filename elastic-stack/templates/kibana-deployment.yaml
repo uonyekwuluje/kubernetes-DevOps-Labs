@@ -26,7 +26,8 @@ spec:
         - name: cluster.name
           value: {{ .Values.cluster_name }}
         - name: elasticsearch.hosts
-          value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
+          value: http://es.elk-stack-ns.svc.cluster.local:9200
+          #value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
         resources:
           limits:
             cpu: 1000m
