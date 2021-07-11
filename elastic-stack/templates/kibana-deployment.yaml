@@ -22,7 +22,8 @@ spec:
         imagePullPolicy: {{ .Values.kibana_image.pullPolicy }}
         env:
         - name: ELASTICSEARCH_HOSTS
-          value: http://elasticsearch:9200
+          value: http://es.elk-stack-ns.svc.cluster.local:9200
+          #value: http://elasticsearch:9200
           #value: http://elasticsearch-0.es.{{ .Values.namespace }}:9200
         resources:
           limits:
@@ -30,4 +31,6 @@ spec:
           requests:
             cpu: 100m
         ports:
-        - containerPort: 5601
+        - name: http
+          containerPort: 5601
+          protocol: TCP
